@@ -1,2 +1,6 @@
 export const LOGIN_ROUTE = '/login'
 export const MAIN_ROUTE = '/main'
+export const ABOUT_US_ROUTE = '/about_us'
+export const USER_ROUTE = '/user'
+export const CONTRIBUTIONS_ROUTE = '/contribution'
+export const MARKUP_ROUTE = '/markup'

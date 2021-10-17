@@ -4,6 +4,7 @@ import {privateRoutes, publicRoutes} from "../routes";
 import {LOGIN_ROUTE, MAIN_ROUTE} from "../utils/consts";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {Context} from "../index";
+
 const AppRouter = () => {
     const {auth} = useContext(Context)
     const [user] = useAuthState(auth)

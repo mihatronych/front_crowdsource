@@ -20,8 +20,8 @@ const Login = () => {
                   justifyContent={"center"}
             >
                 <Grid style={{width: 400, background: 'lightgray'}}
-                    container
-                    alignItems={"center"}
+                      container
+                      alignItems={"center"}
                       direction={"column"}
                 >
                     <Box p={5}>

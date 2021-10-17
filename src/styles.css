@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.theme-light body {
+  background: #F3F3FB;
+}
+.theme-dark body {
+  background: #171745;
+}
+
+/*# sourceMappingURL=styles.css.map */

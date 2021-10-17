@@ -5,16 +5,19 @@ const Loader = () => {
     return (
         <Container>
             <Grid container
-                  style={{height: window.innerHeight - 50}}
-                  alingitems={"center"}
-                  justifyContent={"center"}
+                  spacing={0}
+                  direction="column"
+                  alignItems="center"
+                  justify="center"
+                  style={{minHeight: '100vh'}}
             >
-                <Grid
-                      container
-                      alignItems={"center"}
-                      direction={"column"}
-                >
-                    <div className="lds-hourglass"/>
+                <Grid item xs={3}>
+                    <div className="spans">
+                        <span> </span>
+                        <span> </span>
+                        <span> </span>
+                        <span> </span>
+                    </div>
                 </Grid>
             </Grid>
         </Container>
