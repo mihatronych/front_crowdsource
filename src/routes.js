@@ -36,5 +36,21 @@ export const privateRoutes =[
         path: USER_ROUTE,
         Component: User
     },
+    {
+        path: MAIN_ROUTE,
+        Component: Main
+    },
+    {
+        path: LOGIN_ROUTE,
+        Component: Login
+    },
+    {
+        path: MARKUP_ROUTE,
+        Component: Markup
+    },
+    {
+        path: ABOUT_US_ROUTE,
+        Component: AboutUs
+    }
 
 ]
