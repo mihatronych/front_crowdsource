@@ -1,9 +1,18 @@
-import {ABOUT_US_ROUTE, CONTRIBUTIONS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, MARKUP_ROUTE, USER_ROUTE} from "./utils/consts";
+import {
+    ABOUT_US_ROUTE,
+    CONTRIBUTIONS_ROUTE,
+    LOGIN_ROUTE,
+    MAIN_ROUTE,
+    MARKUP_ROUTE,
+    QUESTIONNAIRE_ROUTE,
+    USER_ROUTE
+} from "./utils/consts";
 import Login from "./components/Login";
 import Main from "./pages/Main";
 import Markup from "./pages/Markup";
 import AboutUs from "./pages/AboutUs";
 import Contributions from "./pages/Contributions";
+import Questionnaire from "./pages/Questionnaire";
 import User from "./pages/User.jsx";
 
 export const publicRoutes =[
@@ -41,16 +50,16 @@ export const privateRoutes =[
         Component: Main
     },
     {
-        path: LOGIN_ROUTE,
-        Component: Login
-    },
-    {
         path: MARKUP_ROUTE,
         Component: Markup
     },
     {
         path: ABOUT_US_ROUTE,
         Component: AboutUs
+    },
+    {
+        path: QUESTIONNAIRE_ROUTE,
+        Component: Questionnaire
     }
 
 ]

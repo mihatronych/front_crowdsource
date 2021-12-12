@@ -93,11 +93,9 @@ const Main = () => {
                     {sample.filter(item => topic == "0" || topic === "" ? true : item.topic === topic)
                         .filter(item => type == "0" || type === "" ? true : item.type === type)
                         .map((item) =>
-                            <CustomCard id={item.id} topic={item.topic} type={item.type}/>
+                            <CustomCard id={item.id} topic={item.topic} type={item.type} onClick/>
                         )}
                 </Stack>
-
-
             </Grid>
         </div>
     );

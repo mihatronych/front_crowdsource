@@ -29,7 +29,7 @@ const Navbar = () => {
                 <Grid container alignItems={"flex-end"} justifyContent={"flex-end"}>
                     {user ?
                         <React.Fragment>
-                            <NavLink as={Link} to={USER_ROUTE} className={classes.link}>Профиль</NavLink>
+                            {/*<NavLink as={Link} to={USER_ROUTE} className={classes.link}>Профиль</NavLink>*/}
                             <NavLink as={Link} to={MAIN_ROUTE} className={classes.link}> Главная</NavLink>
                             <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>
                             <NavLink as={Link} to={CONTRIBUTIONS_ROUTE} className={classes.link}> Мой вклад</NavLink>
@@ -40,7 +40,7 @@ const Navbar = () => {
                         <React.Fragment>
                             <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас </NavLink>
                             <NavLink as={Link} to={MARKUP_ROUTE} className={classes.link}> Разметить текст </NavLink>
-                            <NavLink as={Link} to={LOGIN_ROUTE}>Вход/Регистрация</NavLink>
+                            <NavLink as={Link} to={LOGIN_ROUTE} className={classes.link}>Вход/Регистрация</NavLink>
                         </React.Fragment>
                     }
                 </Grid>

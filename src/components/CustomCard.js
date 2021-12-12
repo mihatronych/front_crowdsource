@@ -5,16 +5,21 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Box from "@mui/material/Box";
+import Questionnaire from "../pages/Questionnaire";
+import {Link} from "@material-ui/core";
+import {QUESTIONNAIRE_ROUTE} from "../utils/consts";
+import {Route} from "react-router-dom";
 
 const CustomCard = ({id, topic, type}) => {
     const style = {
         maxWidth: 300,
         transition: "0.3s",
-        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.2)",
         "&:hover": {
-            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.2)"
         }
     }
+
 
     return (
         <Box my={2}>
