@@ -24,28 +24,29 @@ const Navbar = () => {
     const classes = useStyles();
 
     return (
-        <AppBar color={"primary"} position="static">
-            <Toolbar variant={"dense"}>
-                <Grid container alignItems={"flex-end"} justifyContent={"flex-end"}>
-                    {user ?
-                        <React.Fragment>
-                            {/*<NavLink as={Link} to={USER_ROUTE} className={classes.link}>Профиль</NavLink>*/}
-                            <NavLink as={Link} to={MAIN_ROUTE} className={classes.link}> Главная</NavLink>
-                            <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>
-                            <NavLink as={Link} to={CONTRIBUTIONS_ROUTE} className={classes.link}> Мой вклад</NavLink>
-                            <NavLink as={Link} to={MARKUP_ROUTE} className={classes.link}> Разметить текст </NavLink>
-                            <Button onClick={() => auth.signOut()} variant={"outlined"} color={"secondary"}>Выйти</Button>
-                        </React.Fragment>
-                        :
-                        <React.Fragment>
-                            <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас </NavLink>
-                            <NavLink as={Link} to={MARKUP_ROUTE} className={classes.link}> Разметить текст </NavLink>
-                            <NavLink as={Link} to={LOGIN_ROUTE} className={classes.link}>Вход/Регистрация</NavLink>
-                        </React.Fragment>
-                    }
-                </Grid>
-            </Toolbar>
-        </AppBar>
+        <div></div>
+        // <AppBar color={"primary"} position="static">
+        //     <Toolbar variant={"dense"}>
+        //         <Grid container alignItems={"flex-end"} justifyContent={"flex-end"}>
+        //             {user ?
+        //                 <React.Fragment>
+        //                     {/*<NavLink as={Link} to={USER_ROUTE} className={classes.link}>Профиль</NavLink>*/}
+        //                     <NavLink as={Link} to={MAIN_ROUTE} className={classes.link}> Главная</NavLink>
+        //                     <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>
+        //                     <NavLink as={Link} to={CONTRIBUTIONS_ROUTE} className={classes.link}> Мой вклад</NavLink>
+        //                     <NavLink as={Link} to={MARKUP_ROUTE} className={classes.link}> Разметить текст </NavLink>
+        //                     <Button onClick={() => auth.signOut()} variant={"outlined"} color={"secondary"}>Выйти</Button>
+        //                 </React.Fragment>
+        //                 :
+        //                 <React.Fragment>
+        //                     <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас </NavLink>
+        //                     <NavLink as={Link} to={MARKUP_ROUTE} className={classes.link}> Разметить текст </NavLink>
+        //                     <NavLink as={Link} to={LOGIN_ROUTE} className={classes.link}>Вход/Регистрация</NavLink>
+        //                 </React.Fragment>
+        //             }
+        //         </Grid>
+        //     </Toolbar>
+        // </AppBar>
     );
 };
 

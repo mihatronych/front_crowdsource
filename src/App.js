@@ -10,6 +10,7 @@ import Loader from "./components/Loader";
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
 import { HelmetProvider } from 'react-helmet-async';
+import Menu from "./components/Menu";
 
 require('dotenv').config()
 const App = () => {
@@ -25,8 +26,10 @@ const App = () => {
             <BrowserRouter>
                 <ThemeConfig>
                     <GlobalStyles />
-                <Navbar/>
-                <AppRouter/>
+                    <div className="h-full w-full flex">
+                        <Menu/>
+                        <AppRouter/>
+                    </div>
                 </ThemeConfig>
             </BrowserRouter>
         </HelmetProvider>
