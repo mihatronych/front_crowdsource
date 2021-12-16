@@ -28,7 +28,9 @@ const App = () => {
                     <GlobalStyles />
                     <div className="h-full w-full flex">
                         <Menu/>
-                        <AppRouter/>
+                        <div className="flex-1">
+                            <AppRouter/>
+                        </div>
                     </div>
                 </ThemeConfig>
             </BrowserRouter>

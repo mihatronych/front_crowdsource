@@ -40,8 +40,8 @@ const Main = () => {
     };
 
     return (
-        <div className="flex-grow">
-            <h3 className="text-red-300">IT WORKSs</h3>
+        <div className="p-5">
+            <h3 className="text-red-300">IT WORKS</h3>
         </div>
     );
 };

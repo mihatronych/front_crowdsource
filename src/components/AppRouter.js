@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom'
 import {privateRoutes, publicRoutes} from "../routes";
-import {LOGIN_ROUTE, MAIN_ROUTE} from "../utils/consts";
+import {ABOUT_US_ROUTE, MAIN_ROUTE} from "../utils/consts";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {Context} from "../index";
 
@@ -25,7 +25,7 @@ const AppRouter = () => {
                 {publicRoutes.map(({path, Component}) =>
                     <Route key={path} path={path} component={Component} exact={true}/>
                 )}
-                <Redirect to={LOGIN_ROUTE}/>
+                <Redirect to={ABOUT_US_ROUTE}/>
             </Switch>
         )
 };
