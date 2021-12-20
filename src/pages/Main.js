@@ -37,23 +37,30 @@ const Main = () => {
 
     useEffect(() => {
         getAllTopics().then(data => setTopics(data));
-       let newItems = [];
+        loadItems();
+    }, [])
+
+    const loadItems =()=>{
+        let newItems = [];
         topics.map((value, id) => {
             newItems.push({id: id, topic: value.theme, type: "post"});
             newItems.push({id: id, topic: value.theme, type: "comment"});
             newItems.push({id: id, topic: value.theme, type: "picture"});
         });
         setItems(newItems)
-    }, [])
-
+    }
     const topicChange = (event) => {
         setTopic(event.target.value);
-
+        if(items.length<=0){
+            loadItems();
+        }
     };
 
     const typeChange = (event) => {
         setType(event.target.value);
-        console.log(items)
+        if(items.length<=0){
+            loadItems();
+        }
     };
 
     return (
