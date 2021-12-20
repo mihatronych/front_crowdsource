@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {AppBar, Button, Grid, Link, Toolbar,makeStyles} from "@material-ui/core";
-import {NavLink, Route} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {ABOUT_US_ROUTE, CONTRIBUTIONS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, MARKUP_ROUTE, USER_ROUTE} from "../utils/consts";
 import {Context} from "../index";
 import {useAuthState} from "react-firebase-hooks/auth";
@@ -34,7 +34,7 @@ const Navbar = () => {
                             <NavLink as={Link} to={MAIN_ROUTE} className={classes.link}> Главная</NavLink>
                             <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>
                             {/*<NavLink as={Link} to={CONTRIBUTIONS_ROUTE} className={classes.link}> Мой вклад</NavLink>*/}
-                            {/*<NavLink as={Link} to={MARKUP_ROUTE} className={classes.link}> Разметить текст </NavLink>*/}
+                            <NavLink as={Link} to={MARKUP_ROUTE} className={classes.link}> Разметить текст </NavLink>
                             <Button onClick={() => auth.signOut()} variant={"outlined"} color={"secondary"}>Выйти</Button>
                         </React.Fragment>
                         :

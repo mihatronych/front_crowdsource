@@ -5,6 +5,7 @@ dist# See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
+/src/styles/main.css
 
 # testing
 /coverage
@@ -16,7 +17,6 @@ dist# See https://help.github.com/ignore-files/ for more about ignoring files.
 *.xml
 *.iml
 # misc
-.DS_Store
 .env.local
 .env.development.local
 .env.test.local
