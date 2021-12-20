@@ -18,7 +18,6 @@ const Qcard = ({id, element, type}) => {
         }
     }
     const marks = [{id: 0, label: "Токсично"},
-        {id: 1, label: "Не токсично"},
         {id: 2, label: "Позитивно окрашено"},
         {id: 3,label: "Негативнао окрашено"},
         {id: 4, label: "Оскорбительно"},
@@ -27,7 +26,7 @@ const Qcard = ({id, element, type}) => {
     ]
 
     return (
-        <Box m={2}>
+        <Box m={4}>
             <Card id={id} style={style}>
 
                     {type === "picture" ?

@@ -1,14 +1,12 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Box from "@mui/material/Box";
-import Questionnaire from "../pages/Questionnaire";
-import {Link} from "@material-ui/core";
+import { Link } from 'react-router-dom';
 import {QUESTIONNAIRE_ROUTE} from "../utils/consts";
-import {Route} from "react-router-dom";
+
 
 const CustomCard = ({id, topic, type}) => {
     const style = {
@@ -24,21 +22,20 @@ const CustomCard = ({id, topic, type}) => {
     return (
         <Box my={2}>
         <Card sx={{ maxWidth: 445 }} id={id} style={style}>
-            <CardActionArea>
-                {/*<CardMedia*/}
-                {/*    component="img"*/}
-                {/*    height="140"*/}
-                {/*    image="/static/images/cards/contemplative-reptile.jpg"*/}
-                {/*    alt="green iguana"*/}
-                {/*/>*/}
+            <CardActionArea >
+                <Link style={{ textDecoration: 'none' }} to={{
+                    pathname: QUESTIONNAIRE_ROUTE,
+                    state: {type: type, topic: topic}
+                }}>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {type}
+                    <Typography gutterBottom variant="h5" component="div" color={'text.primary'}>
+                       {type}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         Группа, из которой брались материалы - {topic}
                     </Typography>
                 </CardContent>
+                </Link>
             </CardActionArea>
         </Card>
         </Box>

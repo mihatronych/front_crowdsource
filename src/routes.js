@@ -16,10 +16,10 @@ import Questionnaire from "./pages/Questionnaire";
 import User from "./pages/User.jsx";
 
 export const publicRoutes =[
-    {
-        path: MAIN_ROUTE,
-        Component: Main
-    },
+    // {
+    //     path: MAIN_ROUTE,
+    //     Component: Main
+    // },
     {
         path: LOGIN_ROUTE,
         Component: Login
