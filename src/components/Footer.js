@@ -5,7 +5,7 @@ import {Grid, Typography} from "@mui/material";
 function Footer() {
 
     var style = {
-        // backgroundColor: "#F8F8F8",
+        backgroundColor: "#F8F8F8",
         textAlign: "center",
         padding: "20px",
         position: "fixed",
