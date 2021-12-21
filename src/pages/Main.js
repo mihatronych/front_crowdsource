@@ -44,9 +44,9 @@ const Main = () => {
     const loadItems =()=>{
         let newItems = [];
         topics.map((value, id) => {
-            newItems.push({id: id, topic: value.theme, type: "post"});
-            newItems.push({id: id, topic: value.theme, type: "comment"});
-            newItems.push({id: id, topic: value.theme, type: "picture"});
+            newItems.push({id: id, theme: value.theme, type: "post"});
+            newItems.push({id: id, theme: value.theme, type: "comment"});
+            newItems.push({id: id, theme: value.theme, type: "picture"});
         });
         setItemsToShow(newItems)
     }
@@ -65,7 +65,7 @@ const Main = () => {
     };
 
     const getTopicIdByName = (name) =>{
-        return topics.find(el => el.theme = name)
+        return topics.find(el => el.theme === name)
     }
 
 
@@ -112,11 +112,11 @@ const Main = () => {
             </Grid>
 
             <Grid container spacing={4} pt={3}>
-                {itemsToShow.filter(item => topicSelect === "all" || topicSelect === "" ? true : item.topic === topicSelect)
+                {itemsToShow.filter(item => topicSelect === "all" || topicSelect === "" ? true : item.theme === topicSelect)
                     .filter(item => item.type === typeSelect)
                     .map((item) =>
                         <Grid item>
-                            <CustomCard key={item.id} id={item.id} topic={getTopicIdByName(item.topic)} type={item.type}/>
+                            <CustomCard key={item.id} id={item.id} topic={getTopicIdByName(item.theme)} type={item.type}/>
                         </Grid>
                     )}
 
