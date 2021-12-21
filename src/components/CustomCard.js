@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import {QUESTIONNAIRE_ROUTE} from "../utils/consts";
 
-
 const CustomCard = ({id, topic, type}) => {
     const style = {
         maxWidth: 300,
@@ -17,7 +16,6 @@ const CustomCard = ({id, topic, type}) => {
             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.2)"
         }
     }
-
 
     return (
         <Box my={2}>
@@ -32,7 +30,7 @@ const CustomCard = ({id, topic, type}) => {
                        {type}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Группа, из которой брались материалы - {topic}
+                        Группа, из которой брались материалы - {topic.theme}
                     </Typography>
                 </CardContent>
                 </Link>

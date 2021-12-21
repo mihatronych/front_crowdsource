@@ -1,7 +1,8 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Button, Container, Grid} from "@material-ui/core";
 import {Context} from "../index";
 import firebase from "firebase/compat";
+import {getUserByEmail, createUserByEmail} from "../http/users_api";
 
 const Login = () => {
     const {auth} = useContext(Context)
@@ -9,7 +10,16 @@ const Login = () => {
     const login = async () => {
         const provider = new firebase.auth.GoogleAuthProvider()
         const {user} = await auth.signInWithPopup(provider)
-        console.log(user)
+
+        if(user) {
+            getUserByEmail(user.email).then(
+                data => {
+                    if(!data){
+                        createUserByEmail(user.email);
+                    }
+                }
+            )
+        }
     }
 
     return (

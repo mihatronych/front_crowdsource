@@ -30,10 +30,11 @@ const Main = () => {
     //     {id: 1, topic: 'life of mouse', value: 2},
     //     {id: 2, topic: 'miley syrus is my love', value: 3},
     // ]
-    const [topic, setTopic] = React.useState('');
-    const [type, setType] = React.useState('comment');
+    const [topicSelect, setTopicSelect] = React.useState('');
+    const [typeSelect, setTypeSelect] = React.useState('comment');
     const [topics, setTopics] = React.useState([]);
-    const [items, setItems] = React.useState([]);
+    const [itemsToShow, setItemsToShow] = React.useState([]);
+
 
     useEffect(() => {
         getAllTopics().then(data => setTopics(data));
@@ -47,21 +48,26 @@ const Main = () => {
             newItems.push({id: id, topic: value.theme, type: "comment"});
             newItems.push({id: id, topic: value.theme, type: "picture"});
         });
-        setItems(newItems)
+        setItemsToShow(newItems)
     }
     const topicChange = (event) => {
-        setTopic(event.target.value);
-        if(items.length<=0){
+        setTopicSelect(event.target.value);
+        if(itemsToShow.length<=0){
             loadItems();
         }
     };
 
     const typeChange = (event) => {
-        setType(event.target.value);
-        if(items.length<=0){
+        setTypeSelect(event.target.value);
+        if(itemsToShow.length<=0){
             loadItems();
         }
     };
+
+    const getTopicIdByName = (name) =>{
+        return topics.find(el => el.theme = name)
+    }
+
 
     return (
         <Grid container>
@@ -73,7 +79,7 @@ const Main = () => {
                         <Select
                             labelId="type"
                             id="type"
-                            value={type}
+                            value={typeSelect}
                             label="Type"
                             onChange={typeChange}
                         >
@@ -91,7 +97,7 @@ const Main = () => {
                         <Select
                             labelId="topic"
                             id="topic"
-                            value={topic}
+                            value={topicSelect}
                             label="Topic"
                             onChange={topicChange}
                         >
@@ -106,16 +112,17 @@ const Main = () => {
             </Grid>
 
             <Grid container spacing={4} pt={3}>
-                {items.filter(item => topic === "all" || topic === "" ? true : item.topic === topic)
-                    .filter(item => item.type === type)
+                {itemsToShow.filter(item => topicSelect === "all" || topicSelect === "" ? true : item.topic === topicSelect)
+                    .filter(item => item.type === typeSelect)
                     .map((item) =>
                         <Grid item>
-                            <CustomCard key={item.id} id={item.id} topic={item.topic} type={item.type}/>
+                            <CustomCard key={item.id} id={item.id} topic={getTopicIdByName(item.topic)} type={item.type}/>
                         </Grid>
                     )}
 
             </Grid>
         </Grid>
+
     );
 };
 

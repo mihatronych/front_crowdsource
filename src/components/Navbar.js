@@ -29,7 +29,7 @@ const Navbar = () => {
                 <Grid container alignItems={"flex-end"} justifyContent={"flex-end"}>
                     {user ?
                         <React.Fragment>
-                            <Typography mr={2}> {user.email}</Typography>
+                            <Typography mr={2}> Hi, {user.displayName}</Typography>
                             {/*<NavLink as={Link} to={USER_ROUTE} className={classes.link}>Профиль</NavLink>*/}
                             <NavLink as={Link} to={MAIN_ROUTE} className={classes.link}> Главная</NavLink>
                             <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>

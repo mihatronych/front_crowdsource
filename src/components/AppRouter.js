@@ -9,7 +9,7 @@ const AppRouter = () => {
     const {auth} = useContext(Context)
     const [user] = useAuthState(auth)
 
-    console.log(user)
+
     return user ?
         (
             <Switch>
