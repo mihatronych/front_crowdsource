@@ -14,3 +14,8 @@ export const saveMarkedPosts = async (value) =>{
     const {data} =  await $host.post('/api/postMark/', {values:value});
     return data;
 }
+
+export const getAllPostsWithCount = async () => {
+    const {data} = await $host.get('/api/post/getAllWithCount/');
+    return data
+};
