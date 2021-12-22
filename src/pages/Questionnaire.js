@@ -5,16 +5,15 @@ import {Stack, Typography} from "@mui/material";
 import React, {useContext, useEffect} from "react";
 import {MAIN_ROUTE} from "../utils/consts";
 import {useHistory, useLocation} from 'react-router-dom';
-import {getAllPicturesThemes, getAllUserMarkedPictures} from '../http/pictures_api'
+import {getAllPicturesThemes, getAllUserMarkedPictures, saveMarkedPictures} from '../http/pictures_api'
 import {getAllCommentsThemes, getAllUserMarkedComments, saveMarkedComments} from '../http/comments_api'
-import {getAllPostsThemes, getAllUserMarkedPosts} from '../http/posts_api'
+import {getAllPostsThemes, getAllUserMarkedPosts, saveMarkedPosts} from '../http/posts_api'
 import {getUserByEmail} from "../http/users_api";
 import {Context} from "../index";
 import {useAuthState} from "react-firebase-hooks/auth";
 // const pic = "/Users/daana/Projects/front_crowdsource/src/store/pic.jpg";
 const Questionnaire = () => {
     const [items, setItems] = React.useState([]);
-    const [type, setType] = React.useState("");
     const [markedItems, setMarkedItems] = React.useState([]);
     const [unmarkedItems, setUnmarkedItems] = React.useState([]);
     const [itemsNumber, setItemsNumber] = React.useState('');
@@ -29,21 +28,8 @@ const Questionnaire = () => {
         display: "none"
     }
 
-    // const data = [
-    //     {type: "picture", element: pic},
-    //     {type: "picture", element: pic2},
-    //     {type: "picture", element: pic},
-    //     {type: "picture", element: pic2},
-    //     {type: "picture", element: pic},
-    //     {type: "picture", element: pic2},
-    //     {type: "picture", element: pic2},
-    //     {type: "picture", element: pic},
-    //     {type: "picture", element: pic2},
-    //     {type: "picture", element: pic},
-    // ]
 
     useEffect(() => {
-        setType(state.type);
         getItems(state.type, state.topic);
         getUserByEmail(user.email).then(data => {
             getMarkedItems(state.type, data.id);
@@ -96,9 +82,22 @@ const Questionnaire = () => {
         }
     }
 
+    const renderSelect = (type) => {
+        switch (type) {
+            case"comment":
+                return "комментариев";
+            case "post":
+                return "постов";
+            case "picture":
+                return "картинок";
+            default:
+                return undefined;
+        }
+    }
+
     const getUnmarkedItems = (n) => {
         let currentUnmarkedItems = [];
-        if (markedItems.length > 0) {
+        if (markedItems?.length > 0) {
             currentUnmarkedItems = items.filter((el) => {
                 return !markedItems.find((f) => {
                     return f.commentId === el.id;
@@ -116,18 +115,43 @@ const Questionnaire = () => {
 
     }
 
-    const makeChunk = () => {
+    const makeChunk = async () => {
         if (unmarkedItems.length > 0) {
             setChunk(unmarkedItems.slice(0, itemsNumber));
             unmarkedItems.splice(0, itemsNumber);
         }
-        let dataToSend = Object.keys(checkboxValues).map(key => checkboxValues[key])
-        saveMarkedComments(dataToSend);
+        let dataToSend = Object.keys(checkboxValues).map(key => checkboxValues[key]);
+        switch (state.type) {
+            case"comment":
+                await saveMarkedComments(dataToSend);
+                break;
+            case "post":
+                await saveMarkedPosts(dataToSend);
+                break;
+            case "picture":
+                await saveMarkedPictures(dataToSend);
+                break;
+            default:
+                return undefined;
+        }
+
     }
 
-    const finish = () => {
+    const finish = async () => {
         let dataToSend = Object.keys(checkboxValues).map(key => checkboxValues[key])
-        saveMarkedComments(dataToSend);
+        switch (state.type) {
+            case"comment":
+                await saveMarkedComments(dataToSend);
+                break;
+            case "post":
+                await saveMarkedPosts(dataToSend);
+                break;
+            case "picture":
+                await saveMarkedPictures(dataToSend);
+                break;
+            default:
+                return undefined;
+        }
         history.push(MAIN_ROUTE);
     }
 
@@ -142,8 +166,21 @@ const Questionnaire = () => {
         const userId = await getUserByEmail(user.email).then(data => {
             return data.id;
         });
-        console.log(state.topic.id)
-        checkboxValues[marks["commentId"]] = Object.assign(marks, {"userId": userId, "themeId": state.topic.id});
+
+        switch (state.type) {
+            case"comment":
+                checkboxValues[marks["commentId"]] = Object.assign(marks, {"userId": userId, "themeId": state.topic.id});
+                break;
+            case "post":
+                checkboxValues[marks["postId"]] = Object.assign(marks, {"userId": userId, "themeId": state.topic.id});
+                break;
+            case "picture":
+                checkboxValues[marks["pictureId"]] = Object.assign(marks, {"userId": userId, "themeId": state.topic.id});
+                break;
+            default:
+                break;
+        }
+
     }
 
     return (
@@ -151,9 +188,9 @@ const Questionnaire = () => {
             <Box m={2}>
                 <Button variant={"outlined"} color={"primary"} onClick={() => history.push(MAIN_ROUTE)}> Назад</Button>
                 <Typography gutterBottom variant="h5" component="div"
-                            mt={3}> Разметьте {renderTitle(type)} </Typography>
+                            mt={3}> Разметьте {renderTitle(state.type)} </Typography>
                 <FormControl fullWidth mt={3} style={!init ? hide : {}}>
-                    <InputLabel id="type">Выберите количество комментариев</InputLabel>
+                    <InputLabel id="type">Выберите количество {renderSelect(state.type)}</InputLabel>
                     <Select
                         labelId="type"
                         id="type"
@@ -172,11 +209,11 @@ const Questionnaire = () => {
                 </FormControl>
             </Box>
 
-            {type === "picture" ?
+            {state.type === "picture" ?
                 <Grid container>
                     {chunk.map((item, number) =>
                         <Grid item xs={4}>
-                            <Qcard number={number + 1} key={item.id} id={item.id} type={type} element={item}/>
+                            <Qcard number={number + 1} key={item.id} id={item.id} type={state.type} element={item}/>
                         </Grid>
                     )}
 
@@ -184,7 +221,7 @@ const Questionnaire = () => {
                 <Grid>
                     {chunk.map((item, number) =>
                         <Stack>
-                            <Qcard number={number + 1} key={item.id} id={item.id} type={type} element={item}
+                            <Qcard number={number + 1} key={item.id} id={item.id} type={state.type} element={item}
                                    checkedMarks={checkedMarks}/>
                         </Stack>
                     )}

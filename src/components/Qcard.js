@@ -43,8 +43,21 @@ const Qcard = ({number, id, element, type, checkedMarks}) => {
         const result = {};
         marks.map(mark => {
             result[mark.enLabel] = 0;
-        })
-        result["commentId"] = id;
+        });
+        switch (type) {
+            case"comment":
+                result["commentId"] = id;
+                break;
+            case "post":
+                result["postId"] = id;
+                break;
+            case "picture":
+                result["pictureId"] = id;
+                break;
+            default:
+                break;
+        }
+
         setCheckboxResults(result);
     }, [])
 

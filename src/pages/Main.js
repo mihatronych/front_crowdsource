@@ -85,7 +85,7 @@ const Main = () => {
                         >
                             <MenuItem value={"comment"}>Комментарии</MenuItem>
                             <MenuItem value={"post"}>Посты</MenuItem>
-                            <MenuItem value={"picture"}>Картинки</MenuItem>
+                            {/*<MenuItem value={"picture"}>Картинки</MenuItem>*/}
 
                         </Select>
                     </FormControl>
