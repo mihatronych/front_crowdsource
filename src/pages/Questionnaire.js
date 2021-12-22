@@ -6,7 +6,7 @@ import React, {useContext, useEffect} from "react";
 import {MAIN_ROUTE} from "../utils/consts";
 import {useHistory, useLocation} from 'react-router-dom';
 import {getAllPicturesThemes, getAllUserMarkedPictures} from '../http/pictures_api'
-import {getAllCommentsThemes, getAllUserMarkedComments,saveMarkedComments} from '../http/comments_api'
+import {getAllCommentsThemes, getAllUserMarkedComments, saveMarkedComments} from '../http/comments_api'
 import {getAllPostsThemes, getAllUserMarkedPosts} from '../http/posts_api'
 import {getUserByEmail} from "../http/users_api";
 import {Context} from "../index";
@@ -97,16 +97,16 @@ const Questionnaire = () => {
     }
 
     const getUnmarkedItems = (n) => {
-        const currentUnmarkedItems = items.filter((el) => {
-            if(markedItems.length>0) {
-                return markedItems.some((f) => {
-                    return f.commentId !== el.id;
+        let currentUnmarkedItems = [];
+        if (markedItems.length > 0) {
+            currentUnmarkedItems = items.filter((el) => {
+                return !markedItems.find((f) => {
+                    return f.commentId === el.id;
                 })
-            }
-            else{
-                return true;
-            }
-        });
+            });
+        } else {
+            currentUnmarkedItems = items;
+        }
         setUnmarkedItems(currentUnmarkedItems)
 
         if (currentUnmarkedItems.length > 0) {
@@ -125,7 +125,7 @@ const Questionnaire = () => {
         saveMarkedComments(dataToSend);
     }
 
-    const finish = () =>{
+    const finish = () => {
         let dataToSend = Object.keys(checkboxValues).map(key => checkboxValues[key])
         saveMarkedComments(dataToSend);
         history.push(MAIN_ROUTE);
@@ -184,7 +184,8 @@ const Questionnaire = () => {
                 <Grid>
                     {chunk.map((item, number) =>
                         <Stack>
-                            <Qcard number={number + 1} key={item.id} id={item.id} type={type} element={item} checkedMarks={checkedMarks}/>
+                            <Qcard number={number + 1} key={item.id} id={item.id} type={type} element={item}
+                                   checkedMarks={checkedMarks}/>
                         </Stack>
                     )}
 
