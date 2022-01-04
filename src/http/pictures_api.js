@@ -14,3 +14,8 @@ export const saveMarkedPictures = async (value) =>{
     const {data} =  await $host.post('/api/pictureMark/', {values:value});
     return data;
 }
+
+export const savePictures = async (value) =>{
+    const {data} =  await $host.post('/api/picture/', {values:value});
+    return data;
+}

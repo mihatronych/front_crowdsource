@@ -1,5 +1,5 @@
 import {
-    ABOUT_US_ROUTE,
+    ABOUT_US_ROUTE, ADD_ROUTE,
     CONTRIBUTIONS_ROUTE, GENERAL_INFO_ROUTE,
     LOGIN_ROUTE,
     MAIN_ROUTE,
@@ -15,6 +15,7 @@ import Contributions from "./pages/Contributions";
 import Questionnaire from "./pages/Questionnaire";
 import User from "./pages/User.jsx";
 import GeneralInfo from "./pages/GeneralInfo";
+import Add from "./pages/Add";
 
 export const publicRoutes =[
     // {
@@ -65,6 +66,10 @@ export const privateRoutes =[
     {
         path: QUESTIONNAIRE_ROUTE,
         Component: Questionnaire
+    },
+    {
+        path: ADD_ROUTE,
+        Component: Add
     }
 
 ]

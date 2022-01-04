@@ -19,3 +19,8 @@ export const getAllPostsWithCount = async () => {
     const {data} = await $host.get('/api/post/getAllWithCount/');
     return data
 };
+
+export const savePosts = async (value) => {
+    const {data} =  await $host.post('/api/post/', {values:value});
+    return data;
+}
