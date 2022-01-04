@@ -37,7 +37,7 @@ export const publicRoutes =[
 
 ]
 
-export const privateRoutes =[
+export const adminRoutes =[
 
     {
         path: CONTRIBUTIONS_ROUTE,
@@ -70,6 +70,39 @@ export const privateRoutes =[
     {
         path: ADD_ROUTE,
         Component: Add
+    }
+
+]
+
+export const userRoutes =[
+
+    {
+        path: CONTRIBUTIONS_ROUTE,
+        Component: Contributions
+    },
+    {
+        path: USER_ROUTE,
+        Component: User
+    },
+    {
+        path: MAIN_ROUTE,
+        Component: Main
+    },
+    {
+        path: GENERAL_INFO_ROUTE,
+        Component: GeneralInfo
+    },
+    {
+        path: MARKUP_ROUTE,
+        Component: Markup
+    },
+    {
+        path: ABOUT_US_ROUTE,
+        Component: AboutUs
+    },
+    {
+        path: QUESTIONNAIRE_ROUTE,
+        Component: Questionnaire
     }
 
 ]
