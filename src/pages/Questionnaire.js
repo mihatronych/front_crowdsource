@@ -213,7 +213,7 @@ const Questionnaire = () => {
                 <Grid container>
                     {chunk.map((item, number) =>
                         <Grid item xs={4}>
-                            <Qcard number={number + 1} key={item.id} id={item.id} type={state.type} element={item}/>
+                            <Qcard number={number + 1} key={item.id} id={item.id} type={state.type} element={item} checkedMarks={checkedMarks}/>
                         </Grid>
                     )}
 

@@ -34,7 +34,8 @@ const Qcard = ({number, id, element, type, checkedMarks}) => {
         {id: 3, label: "Негативнао окрашено", enLabel: "emotional_negative"},
         {id: 4, label: "Оскорбительно", enLabel: "rude"},
         {id: 5, label: "Личное оскорбление", enLabel: "individual_obscene"},
-        {id: 6, label: "Оскорбление социальной группы", enLabel: "group_obscene"}
+        {id: 6, label: "Оскорбление социальной группы", enLabel: "group_obscene"},
+        {id: 7, label: "Нейтрально", enLabel: "neutral"}
     ]
 
     const [checkboxResults, setCheckboxResults] = React.useState({});
@@ -76,7 +77,7 @@ const Qcard = ({number, id, element, type, checkedMarks}) => {
                     <CardMedia
                         component="img"
                         height="160"
-                        // image = {`/static/media/${element.img}`}
+                        image = {process.env.REACT_APP_API_URL+ element.img}
                         alt="meme"
                     /> : null}
                 <CardContent>

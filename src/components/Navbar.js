@@ -34,11 +34,11 @@ const Navbar = () => {
     const classes = useStyles();
     const [role, setRole] = useState("");
     const [roleId, setRoleId] = useState('');
-    if (!role) {
+    if (!role && user) {
         getUserByEmail(user.email).then(
             data => {
-                setRoleId(data["roleId"]);
                 if (data) {
+                    setRoleId(data["roleId"]);
                     getUserRole(data["roleId"]).then(role =>
                         setRole(role.role)
                     )
@@ -59,9 +59,9 @@ const Navbar = () => {
                             {/*<NavLink as={Link} to={USER_ROUTE} className={classes.link}>Профиль</NavLink>*/}
                             <NavLink as={Link} to={MAIN_ROUTE} className={classes.link}> Главная</NavLink>
                             <NavLink as={Link} to={GENERAL_INFO_ROUTE} className={classes.link}> Общая сводка</NavLink>
-                            <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>
                             {roleId === 0 ?
                                 <NavLink as={Link} to={ADD_ROUTE} className={classes.link}> Добавление</NavLink> : null}
+                            <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>
                             {/*<NavLink as={Link} to={CONTRIBUTIONS_ROUTE} className={classes.link}> Мой вклад</NavLink>*/}
                             <Button onClick={() => auth.signOut()} variant={"outlined"}
                                     color={"secondary"}>Выйти</Button>

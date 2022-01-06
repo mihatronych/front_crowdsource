@@ -7,11 +7,20 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {Grid} from "@mui/material";
-import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {
+    Fade,
+    FormControl,
+    InputLabel,
+    LinearProgress,
+    MenuItem,
+    Select
+} from "@material-ui/core";
 import {useEffect} from "react";
 import {getAllTopics} from "../http/topics_api";
 import {getAllCommentsWithCount} from "../http/comments_api";
 import {getAllPostsWithCount} from "../http/posts_api";
+import {getAllPictureWithCount} from "../http/pictures_api";
+import Typography from "@mui/material/Typography";
 
 function createData(content, peopleToxic, peopleNToxic, machineToxic, machineNToxic) {
     return { content, peopleToxic, peopleNToxic, machineToxic, machineNToxic };
@@ -50,12 +59,16 @@ export default function BasicTable() {
         const theme = getTopicIdByName(topicSelect);
         if (theme)
         {
-            await setFilteredContent(rows.filter(item => item.themeId == theme.id))
+            await setFilteredContent(rows.filter(item => item.themeId !== theme.id))
         }
-        await setFilteredContent(rows);
+        else {
+            await setFilteredContent(rows);
+        }
+
     };
 
     const loadContent = async (type) => {
+        setFilteredContent([]);
         switch (type) {
             case 'comment':
                 await loadComments();
@@ -78,6 +91,7 @@ export default function BasicTable() {
         await filteringContent(loadedPosts);
     };
 
+
     const topicChange = async(event) => {
         setTopicSelect(event.target.value);
         await filteringContent(content);
@@ -91,6 +105,7 @@ export default function BasicTable() {
     const getTopicIdByName = (name) =>{
         return topics.find(el => el.theme === name);
     }
+
 
     return (
         <div>
@@ -141,6 +156,17 @@ export default function BasicTable() {
                 </Grid>
 
             </Grid>
+            {/*<Fade*/}
+            {/*    in={loading}*/}
+            {/*    style={{*/}
+            {/*        transitionDelay: loading ? '5ms' : '0ms',*/}
+            {/*    }}*/}
+            {/*    unmountOnExit*/}
+            {/*>*/}
+            {/*    <LinearProgress />*/}
+            {/*</Fade>*/}
+
+            {filteredContent.length > 0 ?
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -170,7 +196,8 @@ export default function BasicTable() {
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            </TableContainer>: <Typography style={{marginTop: "20px"}}> Ничего нет</Typography>}
+
         </div>
     );
 }

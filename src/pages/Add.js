@@ -14,7 +14,7 @@ import {saveMarkedPictures, savePictures} from "../http/pictures_api";
 
 const Add = () => {
     const history = useHistory();
-    const [typeSelect, setTypeSelect] = useState('comment');
+    const [typeSelect, setTypeSelect] = useState('post');
     const [topicSelect, setTopicSelect] = React.useState('');
     const [postSelect, setPostSelect] = React.useState('');
     const [topics, setTopics] = React.useState([]);
@@ -104,7 +104,6 @@ const Add = () => {
     }
 
     const handleFileUpload = e => {
-        debugger
         const file = e.target.files[0];
         const reader = new FileReader();
         if (typeSelect === "picture") {
@@ -185,8 +184,8 @@ const Add = () => {
                     label="Type"
                     onChange={typeChange}
                 >
-                    <MenuItem value={"comment"}>Комментарии</MenuItem>
                     <MenuItem value={"post"}>Посты</MenuItem>
+                    <MenuItem value={"comment"}>Комментарии</MenuItem>
                     <MenuItem value={"picture"}>Картинки</MenuItem>
 
                 </Select>
