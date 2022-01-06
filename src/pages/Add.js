@@ -9,18 +9,21 @@ import DataTable from 'react-data-table-component';
 import CardMedia from "@mui/material/CardMedia";
 import {getAllTopics} from "../http/topics_api";
 import {saveComments, saveMarkedComments} from "../http/comments_api";
-import {saveMarkedPosts, savePosts} from "../http/posts_api";
+import {getAllPostsThemes, saveMarkedPosts, savePosts} from "../http/posts_api";
 import {saveMarkedPictures, savePictures} from "../http/pictures_api";
 
 const Add = () => {
     const history = useHistory();
     const [typeSelect, setTypeSelect] = useState('comment');
     const [topicSelect, setTopicSelect] = React.useState('');
+    const [postSelect, setPostSelect] = React.useState('');
     const [topics, setTopics] = React.useState([]);
     const [columns, setColumns] = useState([]);
     const [data, setData] = useState([]);
     const [imgUrl, setImgUrl] = useState('');
     const [isReady, setIsReady] = useState(false);
+    const [posts, setPosts] = useState([]);
+    const [imgFile, setImgFile] = useState('');
     const renderName = (type) => {
         switch (type) {
             case"comment":
@@ -45,10 +48,16 @@ const Add = () => {
 
     const topicChange = (event) => {
         setTopicSelect(event.target.value);
+        getAllPostsThemes(event.target.value).then(data => setPosts(data));
+    };
+
+    const postChange = (event) => {
+        setPostSelect(event.target.value);
     };
 
     useEffect(() => {
         getAllTopics().then(data => setTopics(data));
+        getAllPostsThemes(topicSelect).then(data => setPosts(data));
     }, [])
 
 
@@ -93,16 +102,16 @@ const Add = () => {
 
     const handleFileUpload = e => {
         const file = e.target.files[0];
+        setImgFile(file);
         const reader = new FileReader();
-        if(typeSelect==="picture"){
+        if (typeSelect === "picture") {
             reader.onload = (evt) => {
                 setImgUrl(evt.target.result);
             }
-            if(!file)
+            if (!file)
                 return;
             reader.readAsDataURL(file);
-        }
-        else {
+        } else {
 
             reader.onload = (evt) => {
                 /* Parse data */
@@ -115,37 +124,53 @@ const Add = () => {
                 const data = XLSX.utils.sheet_to_csv(ws, {header: 1});
                 processData(data);
             };
-            if(!file)
+            if (!file)
                 return;
             reader.readAsText(file);
         }
 
-        if (topicSelect && typeSelect){
+        if ((topicSelect || topicSelect === 0) && (typeSelect || typeSelect === 0)) {
             setIsReady(true);
         }
 
     }
 
     const save = async () => {
-        // switch (typeSelect) {
-        //     case"comment":
-        //         await saveComments();
-        //         break;
-        //     case "post":
-        //         const dataToSend = [];
-        //         data.map(value => dataToSend.push({text:value[0], themeId:topicSelect}));
-        //         await savePosts(dataToSend);
-        //         break;
-        //     case "picture":
-        //         await savePictures();
-        //         break;
-        //     default:
-        //         return undefined;
-        // }
-        // history.push(MAIN_ROUTE);
+        debugger
+        switch (typeSelect) {
+            case "comment":
+                const commentsToSend = [];
+                data.map(value => commentsToSend.push({
+                    text: value["comment"],
+                    postId: postSelect,
+                    commentId:null,
+                    themeId: topicSelect,
+                }));
+                await saveComments(commentsToSend);
+                break;
+            case "post":
+                const postsToSend = [];
+                data.map(value => postsToSend.push({text: value[0], themeId: topicSelect}));
+                await savePosts(postsToSend);
+                break;
+            case "picture":
+                const form = new FormData();
+                form.append('images', imgFile);
+                form.append('postId', postSelect);
+                form.append('themeId', topicSelect);
+                for (const key of form.entries()) {
+                    console.log(key[0] + ', ' + key[1])
+                }
+                await savePictures(form);
+
+                break;
+            default:
+                return undefined;
+        }
+        history.push(MAIN_ROUTE);
     }
 
-    return(
+    return (
         <Box m={2} height="100vh">
             <Button variant={"outlined"} color={"primary"} onClick={() => history.push(MAIN_ROUTE)}> Назад</Button>
             <FormControl fullWidth mt={3}>
@@ -163,7 +188,7 @@ const Add = () => {
 
                 </Select>
             </FormControl>
-            <FormControl fullWidth mt={3}       >
+            <FormControl fullWidth mt={3}>
                 <InputLabel id="topic">Тема</InputLabel>
                 <Select
                     labelId="topic"
@@ -172,44 +197,61 @@ const Add = () => {
                     label="Topic"
                     onChange={topicChange}
                 >
-                    {topics.map((item) => <MenuItem key={item.id} value={item.theme}>{item.theme}</MenuItem>)}
+                    {topics.map((item) => <MenuItem key={item.id} value={item.id}>{item.theme}</MenuItem>)}
                 </Select>
             </FormControl>
+            {typeSelect !== "post" ?
+                <FormControl fullWidth mt={3}>
+                    <InputLabel id="post">Пост</InputLabel>
+                    <Select
+                        labelId="post"
+                        id="post"
+                        value={postSelect}
+                        label="Post"
+                        onChange={postChange}
+                    >
+                        {posts.map((item) => <MenuItem key={item.id} value={item.id}>{item.text}</MenuItem>)}
+                    </Select>
+                </FormControl> : null}
             {/*<Typography gutterBottom variant="h5" component="div"*/}
             {/*            mt={3}> Добавить {renderName(typeSelect)} </Typography>*/}
             <Box mt={2}>
-                <Tooltip title={typeSelect==="picture"? "Загрузите мем, можно не смешной, мы за это не осудим" : "Загрузите csv файл "} placement="bottom-start">
-                <Button
-                    variant="contained"
-                    component="label"
-                    disabled={!topicSelect&&typeSelect}
-                >
-                    Загрузить {renderName(typeSelect)}
-                    <input
-                        accept={typeSelect==="picture"? "image/*": ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"}
-                        type="file"
-                        onChange={handleFileUpload}
-                        hidden
-                    />
-                </Button>
+                <Tooltip
+                    title={typeSelect === "picture" ? "Загрузите мем, можно не смешной, мы за это не осудим" : "Загрузите csv файл "}
+                    placement="bottom-start">
+                    <Button
+                        variant="contained"
+                        component="label"
+                        disabled={!(topicSelect || topicSelect === 0) && typeSelect}
+                    >
+                        Загрузить {renderName(typeSelect)}
+                        <input
+                            accept={typeSelect === "picture" ? "image/*" : ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"}
+                            type="file"
+                            onChange={handleFileUpload}
+                            hidden
+                        />
+                    </Button>
                 </Tooltip>
-                <Button variant={"contained"} color={"primary"} style={{marginLeft:"10px"}} disabled={!isReady} onClick={save}> Добавить </Button>
+                <Button variant={"contained"} color={"primary"} style={{marginLeft: "10px"}} disabled={!isReady}
+                        onClick={save}> Добавить </Button>
 
             </Box>
             <Box mb={12} mt={3} paddingBottom="10vh">
-            {typeSelect === "picture" ?
-                <CardMedia
-                    component="img"
-                    image = {imgUrl}
-                    alt="meme"
-                />:
-                <DataTable
-                    pagination
-                    highlightOnHover
-                    columns={columns}
-                    data={data}
-                />
-            }
+                {typeSelect === "picture" ?
+                    <CardMedia
+                        component="img"
+                        image={imgUrl}
+                        type="file"
+                        alt="meme"
+                    /> :
+                    <DataTable
+                        pagination
+                        highlightOnHover
+                        columns={columns}
+                        data={data}
+                    />
+                }
             </Box>
 
 

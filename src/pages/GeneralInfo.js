@@ -38,33 +38,25 @@ export default function BasicTable() {
     const [topicSelect, setTopicSelect] = React.useState('');
     const [typeSelect, setTypeSelect] = React.useState('post');
     const [topics, setTopics] = React.useState([]);
-    const [itemsToShow, setItemsToShow] = React.useState([]);
     const [content, setContent] = React.useState([]);
     const [filteredContent, setFilteredContent] = React.useState([]);
 
     useEffect(async () => {
         getAllTopics().then(data => setTopics(data));
-        await loadContent();
+        await loadContent(typeSelect);
     }, []);
 
     const filteringContent = async (rows) => {
-        const theme = getTopicIdByName(topicSelect)
-        console.log(typeSelect)
-        console.log(theme)
-        console.log(content)
+        const theme = getTopicIdByName(topicSelect);
         if (theme)
         {
-
             await setFilteredContent(rows.filter(item => item.themeId == theme.id))
         }
-        console.log(rows)
-        await setFilteredContent(rows)
+        await setFilteredContent(rows);
     };
 
-    const loadContent = async () => {
-        console.log(typeSelect)
-
-        switch (typeSelect) {
+    const loadContent = async (type) => {
+        switch (type) {
             case 'comment':
                 await loadComments();
                 break;
@@ -76,30 +68,28 @@ export default function BasicTable() {
 
     const loadComments = async () => {
         const loadedComments = await getAllCommentsWithCount();
-        setContent(loadedComments)
-        await filteringContent(loadedComments)
+        setContent(loadedComments);
+        await filteringContent(loadedComments);
     };
 
     const loadPosts = async () => {
         const loadedPosts = await getAllPostsWithCount();
-        console.log(loadedPosts)
-        setContent(loadedPosts)
-        await filteringContent(loadedPosts)
+        setContent(loadedPosts);
+        await filteringContent(loadedPosts);
     };
 
     const topicChange = async(event) => {
         setTopicSelect(event.target.value);
-        await filteringContent(content)
+        await filteringContent(content);
     };
 
     const typeChange = async (event) => {
         await setTypeSelect(event.target.value);
-        console.log(event.target.value)
-        await loadContent();
+        await loadContent(event.target.value);
     };
 
     const getTopicIdByName = (name) =>{
-        return topics.find(el => el.theme === name)
+        return topics.find(el => el.theme === name);
     }
 
     return (

@@ -61,7 +61,7 @@ const Navbar = () => {
                             <NavLink as={Link} to={GENERAL_INFO_ROUTE} className={classes.link}> Общая сводка</NavLink>
                             <NavLink as={Link} to={ABOUT_US_ROUTE} className={classes.link}> О нас</NavLink>
                             {roleId === 0 ?
-                                <NavLink as={Link} to={ADD_ROUTE} className={classes.link}> Добавить</NavLink> : null}
+                                <NavLink as={Link} to={ADD_ROUTE} className={classes.link}> Добавление</NavLink> : null}
                             {/*<NavLink as={Link} to={CONTRIBUTIONS_ROUTE} className={classes.link}> Мой вклад</NavLink>*/}
                             <Button onClick={() => auth.signOut()} variant={"outlined"}
                                     color={"secondary"}>Выйти</Button>
