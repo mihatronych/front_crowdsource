@@ -37,13 +37,16 @@ const Add = () => {
         }
     }
 
-    const typeChange = (event) => {
-        setTypeSelect(event.target.value);
+    const clearAll = () =>{
         setIsReady(false);
         setImgUrl('');
         setData([]);
         setColumns([]);
+    }
 
+    const typeChange = (event) => {
+        setTypeSelect(event.target.value);
+        clearAll();
     }
 
     const topicChange = (event) => {
@@ -101,10 +104,11 @@ const Add = () => {
     }
 
     const handleFileUpload = e => {
+        debugger
         const file = e.target.files[0];
-        setImgFile(file);
         const reader = new FileReader();
         if (typeSelect === "picture") {
+            setImgFile(file);
             reader.onload = (evt) => {
                 setImgUrl(evt.target.result);
             }
@@ -136,7 +140,6 @@ const Add = () => {
     }
 
     const save = async () => {
-        debugger
         switch (typeSelect) {
             case "comment":
                 const commentsToSend = [];
@@ -150,7 +153,7 @@ const Add = () => {
                 break;
             case "post":
                 const postsToSend = [];
-                data.map(value => postsToSend.push({text: value[0], themeId: topicSelect}));
+                data.map(value => postsToSend.push({text: value["post"], themeId: topicSelect}));
                 await savePosts(postsToSend);
                 break;
             case "picture":
@@ -167,7 +170,7 @@ const Add = () => {
             default:
                 return undefined;
         }
-        history.push(MAIN_ROUTE);
+        clearAll();
     }
 
     return (

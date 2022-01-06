@@ -16,6 +16,10 @@ export const saveMarkedPictures = async (value) =>{
 }
 
 export const savePictures = async (value) =>{
-    const {data} =  await $host.post('/api/picture/', {values:value});
+    const {data} =  await $host.post('/api/picture/', value,{
+        headers: {
+            'Content-Type': `multipart/form-data;`,
+        }
+    });
     return data;
 }
